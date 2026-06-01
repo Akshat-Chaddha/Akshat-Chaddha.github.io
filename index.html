@@ -28,7 +28,7 @@
   --ease1:cubic-bezier(.16,1,.3,1);
   --ease2:cubic-bezier(.4,0,.2,1);
 }
-html{scroll-behavior:auto;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--bg);
@@ -822,6 +822,23 @@ footer{
   .ft-top{flex-direction:column;gap:48px}
   .hero-stats{gap:28px}
 }
+
+/* PAGE TRANSITION */
+body.page-enter{
+  opacity:0;
+  transform:translateY(15px);
+}
+body.page-loaded{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
+}
+.page-exit{
+  opacity:0;
+  transform:translateY(-15px);
+  transition:all .45s cubic-bezier(.16,1,.3,1);
+}
+
 </style>
 </head>
 <body>
@@ -858,7 +875,7 @@ footer{
   </ul>
   <div class="nav-right">
     <a href="https://github.com/Akshat-Chaddha" target="_blank" class="nav-gh">GitHub ↗</a>
-    <a href="https://linkedin.com/in/akshat-chaddha" target="_blank" class="nav-gh">LinkedIn ↗</a>
+    <a href="https://www.linkedin.com/in/akshat-chaddha-343188354/" target="_blank" class="nav-gh">LinkedIn ↗</a>
     <a href="mailto:23ad10ak9@mitsgwl.ac.in" class="nav-cta"><span>Hire Me</span></a>
   </div>
 </nav>
@@ -898,7 +915,7 @@ footer{
       <div class="hero-btns">
         <a href="#projects" class="btn-gold"><s>View Projects</s></a>
         <a href="https://github.com/Akshat-Chaddha" target="_blank" class="btn-ghost">GitHub ↗</a>
-        <a href="https://linkedin.com/in/akshat-chaddha" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+        <a href="https://www.linkedin.com/in/akshat-chaddha-343188354/" target="_blank" class="btn-ghost">LinkedIn ↗</a>
       </div>
     </div>
     <div class="hero-stats">
@@ -1299,7 +1316,7 @@ footer{
       <h2 class="sec-h" style="margin-bottom:0">Real-World<br><em>AI.</em></h2>
       <p class="exp-sticky-sub">Two internships spanning environmental ML and IBM cloud-based AI. Real datasets, real models, real impact — not just tutorials.</p>
       <div class="exp-btns">
-        <a href="https://linkedin.com/in/akshat-chaddha" target="_blank" class="btn-gold" style="display:block;text-align:center"><s>View LinkedIn ↗</s></a>
+        <a href="https://www.linkedin.com/in/akshat-chaddha-343188354/" target="_blank" class="btn-gold" style="display:block;text-align:center"><s>View LinkedIn ↗</s></a>
         <a href="mailto:23ad10ak9@mitsgwl.ac.in" class="btn-ghost" style="display:block;text-align:center">Get In Touch ↗</a>
       </div>
     </div>
@@ -1360,7 +1377,7 @@ footer{
     <div class="contact-list" data-rev="left" style="transition-delay:.15s">
       <a href="mailto:23ad10ak9@mitsgwl.ac.in" class="c-link"><span class="c-ico">✉</span><div class="c-main"><div class="c-lbl">Email</div><div class="c-val">23ad10ak9@mitsgwl.ac.in</div></div><span class="c-arr">↗</span></a>
       <a href="https://github.com/Akshat-Chaddha" target="_blank" class="c-link"><span class="c-ico">⌥</span><div class="c-main"><div class="c-lbl">GitHub</div><div class="c-val">github.com/Akshat-Chaddha</div></div><span class="c-arr">↗</span></a>
-      <a href="https://linkedin.com/in/akshat-chaddha" target="_blank" class="c-link"><span class="c-ico">◎</span><div class="c-main"><div class="c-lbl">LinkedIn</div><div class="c-val">linkedin.com/in/akshat-chaddha</div></div><span class="c-arr">↗</span></a>
+      <a href="https://www.linkedin.com/in/akshat-chaddha-343188354/" target="_blank" class="c-link"><span class="c-ico">◎</span><div class="c-main"><div class="c-lbl">LinkedIn</div><div class="c-val">linkedin.com/in/akshat-chaddha</div></div><span class="c-arr">↗</span></a>
       <a href="tel:+918871772139" class="c-link"><span class="c-ico">◉</span><div class="c-main"><div class="c-lbl">Phone</div><div class="c-val">+91 8871772139</div></div><span class="c-arr">↗</span></a>
     </div>
   </div>
@@ -1399,7 +1416,7 @@ footer{
         <div class="fn-head">Connect</div>
         <div class="fn-list">
           <a href="https://github.com/Akshat-Chaddha" target="_blank">GitHub</a>
-          <a href="https://linkedin.com/in/akshat-chaddha" target="_blank">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/akshat-chaddha-343188354/" target="_blank">LinkedIn</a>
           <a href="mailto:23ad10ak9@mitsgwl.ac.in">Email</a>
           <a href="tel:+918871772139">+91 8871772139</a>
         </div>
@@ -1487,5 +1504,24 @@ const st=document.createElement('style');
 st.textContent='@keyframes sl{0%{opacity:0;transform:scaleX(0);transform-origin:left}25%{opacity:.35}75%{opacity:.1}100%{opacity:0;transform:scaleX(1.4);left:110%}}';
 document.head.appendChild(st);
 </script>
+
+<script>
+document.body.classList.add('page-enter');
+window.addEventListener('load',()=>{
+  document.body.classList.add('page-loaded');
+});
+
+document.querySelectorAll('a[href]').forEach(link=>{
+ const href=link.getAttribute('href');
+ if(href && !href.startsWith('#') && !href.startsWith('mailto:') && !link.hasAttribute('target')){
+   link.addEventListener('click',function(e){
+     e.preventDefault();
+     document.body.classList.add('page-exit');
+     setTimeout(()=>{window.location.href=href;},450);
+   });
+ }
+});
+</script>
+
 </body>
 </html>
